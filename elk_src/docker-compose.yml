@@ -1,0 +1,31 @@
+# Docker Compose file for ELK stack
+
+# Build with:
+# docker-compose build elk
+
+# Run with:
+# docker-compose up
+version: '2'
+services:
+  elk:
+    build: ./dockerfile-elk
+    ports:
+      - "80:5601"
+      - "9200:9200"
+      - "5044:5044"
+    networks:
+      - net-elk
+  nginx:
+    build: ./dockerfile-nginx
+    depends_on:
+      - elk
+    networks:
+      - net-elk
+    ports:
+      - "81:80"
+
+
+networks:
+  net-elk:
+    driver: bridge
+
