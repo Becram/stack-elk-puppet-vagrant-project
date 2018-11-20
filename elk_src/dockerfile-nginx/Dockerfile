@@ -54,6 +54,14 @@ ADD logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
 # create template based on filebeat version (assumption: it is the same version as elasticsearch version)
 RUN filebeat export template --es.version ${FILEBEAT_VERSION} > /etc/filebeat/filebeat.template.json
 
+ ##############################################################################
+ #                               Timezone
+ ##############################################################################
+ 
+ENV TZ=Asia/Kathmandu
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+
 ###############################################################################
 #                                    DATA
 ###############################################################################
